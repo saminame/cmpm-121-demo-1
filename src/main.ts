@@ -25,7 +25,12 @@ counterDisplay.innerHTML = `${Math.floor(counter)} 🦢`;
 app.append(counterDisplay);
 
 button.addEventListener("click", () => {
+  counter++;
+  counterDisplay.innerHTML = `${Math.floor(counter)} 🦢`;
+});
+
+// Step 3: Automatic clicking
+setInterval(() => {
     counter++;
     counterDisplay.innerHTML = `${Math.floor(counter)} 🦢`;
-});
-    
+  }, 1000);
