@@ -29,8 +29,28 @@ button.addEventListener("click", () => {
   counterDisplay.innerHTML = `${Math.floor(counter)} 🦢`;
 });
 
-// Step 3: Automatic clicking
-setInterval(() => {
-    counter++;
-    counterDisplay.innerHTML = `${Math.floor(counter)} 🦢`;
-  }, 1000);
+// // Step 3: Automatic clicking
+// setInterval(() => {
+//   counter++;
+//   counterDisplay.innerHTML = `${Math.floor(counter)} 🦢`;
+// }, 1000);
+
+// Step 4: Continuous growth
+let lastTimestamp: number = 0;
+
+const animate = (timestamp: number) => {
+  if (lastTimestamp === 0) {
+    lastTimestamp = timestamp;
+  }
+
+  const elapsedTime = timestamp - lastTimestamp;
+  lastTimestamp = timestamp;
+
+  counter += elapsedTime / 1000;
+
+  counterDisplay.innerHTML = `${Math.floor(counter)} 🦢`;
+
+  requestAnimationFrame(animate);
+};
+
+requestAnimationFrame(animate);
