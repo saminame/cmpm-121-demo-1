@@ -24,9 +24,18 @@ const counterDisplay = document.createElement("div");
 counterDisplay.innerHTML = `${Math.floor(counter)} 🦢`;
 app.append(counterDisplay);
 
+// Step 5: Purchasing an upgrade
+const upgradeButton = document.createElement("button");
+upgradeButton.innerHTML = "Buy Life Boost 🦢";
+upgradeButton.disabled = true;
+upgradeButton.style.marginTop = "20px";
+app.append(upgradeButton);
+
+// Step 2:
 button.addEventListener("click", () => {
   counter++;
   counterDisplay.innerHTML = `${Math.floor(counter)} 🦢`;
+  checkUpgrade();
 });
 
 // // Step 3: Automatic clicking
@@ -34,6 +43,15 @@ button.addEventListener("click", () => {
 //   counter++;
 //   counterDisplay.innerHTML = `${Math.floor(counter)} 🦢`;
 // }, 1000);
+
+// Step 5:
+upgradeButton.addEventListener("click", () => {
+    if (counter >= 10) {
+      counter -= 10;
+      counterDisplay.innerHTML = `${Math.floor(counter)} 🦢`;
+      checkUpgrade();
+    }
+  });
 
 // Step 4: Continuous growth
 let lastTimestamp: number = 0;
@@ -54,3 +72,8 @@ const animate = (timestamp: number) => {
 };
 
 requestAnimationFrame(animate);
+
+
+const checkUpgrade = () => {
+    upgradeButton.disabled = counter <= 10;
+  };
