@@ -91,6 +91,10 @@ const growthRateDisplay = document.createElement("div");
 growthRateDisplay.innerHTML = `<br>Potion brewing rate: ${growthRate.toFixed(1)} potions/sec`;
 app.append(growthRateDisplay);
 
+const updateGrowthRateDisplay = () => {
+  growthRateDisplay.innerHTML = `<br>Potion brewing rate: ${growthRate.toFixed(1)} potions/sec`;
+};
+
 // Step 2:
 button.addEventListener("click", () => {
   counter++;
