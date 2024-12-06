@@ -34,11 +34,38 @@ interface Item {
 }
 
 const availableItems: Item[] = [
-  { name: "Apprentice", cost: 10, rate: 0.1, description: "A young helper to brew potions with you." },
-  { name: "Cauldron", cost: 100, rate: 2.0, description: "A sturdy cauldron for brewing potions faster." },
-  { name: "Alchemy Lab", cost: 1000, rate: 50, description: "An advanced lab for mass potion production." },
-  { name: "Potion Master", cost: 5000, rate: 150, description: "A seasoned alchemist who greatly speeds up potion production." },
-  { name: "Magic Fountain", cost: 20000, rate: 500, description: "A mystical fountain that provides an endless flow of magical potions." },
+  {
+    name: "Apprentice",
+    cost: 10,
+    rate: 0.1,
+    description: "A young helper to brew potions with you.",
+  },
+  {
+    name: "Cauldron",
+    cost: 100,
+    rate: 2.0,
+    description: "A sturdy cauldron for brewing potions faster.",
+  },
+  {
+    name: "Alchemy Lab",
+    cost: 1000,
+    rate: 50,
+    description: "An advanced lab for mass potion production.",
+  },
+  {
+    name: "Potion Master",
+    cost: 5000,
+    rate: 150,
+    description:
+      "A seasoned alchemist who greatly speeds up potion production.",
+  },
+  {
+    name: "Magic Fountain",
+    cost: 20000,
+    rate: 500,
+    description:
+      "A mystical fountain that provides an endless flow of magical potions.",
+  },
 ];
 
 interface Upgrade {
@@ -49,9 +76,9 @@ interface Upgrade {
   description: string;
 }
 
-const upgrades: Upgrade[] = availableItems.map(item => ({
+const upgrades: Upgrade[] = availableItems.map((item) => ({
   ...item,
-  count: 0
+  count: 0,
 }));
 
 const upgradeButtons: HTMLButtonElement[] = [];
@@ -60,7 +87,7 @@ const upgradeStatusDisplays: HTMLDivElement[] = [];
 upgrades.forEach((upgrade, idx) => {
   const upgradeButton = document.createElement("button");
   upgradeButton.innerHTML = `${upgrade.name == "Apprentice" || upgrade.name == "Potion Master" ? "Hire" : "Buy"} ${upgrade.name} (✨ ${upgrade.cost}) ~ ${upgrade.description}`;
-  
+
   upgradeButton.disabled = true;
   upgradeButton.style.marginTop = "20px";
   app.append(upgradeButton);
@@ -70,9 +97,7 @@ upgrades.forEach((upgrade, idx) => {
 
   if (upgrade.name == "Apprentice" || upgrade.name == "Potion Master") {
     upgradeStatus.innerHTML = `${upgrade.name}: ${upgrade.count} hired`;
-  }
-  
-  else {
+  } else {
     upgradeStatus.innerHTML = `${upgrade.name}: ${upgrade.count} purchased`;
   }
 
@@ -85,15 +110,17 @@ upgrades.forEach((upgrade, idx) => {
       counter -= upgrade.cost;
       upgrade.count++;
       growthRate += upgrade.rate;
-      upgrade.cost = parseFloat((availableItems[idx].cost * Math.pow(1.15, upgrade.count)).toFixed(2));
-      
+      upgrade.cost = parseFloat(
+        (availableItems[idx].cost * Math.pow(1.15, upgrade.count)).toFixed(2),
+      );
+
       if (upgrade.name == "Apprentice" || upgrade.name == "Potion Master") {
-        upgradeButtons[idx].innerHTML = `Hire ${upgrade.name} (✨ ${upgrade.cost}) ~ ${upgrade.description}`;
+        upgradeButtons[idx].innerHTML =
+          `Hire ${upgrade.name} (✨ ${upgrade.cost}) ~ ${upgrade.description}`;
         upgradeStatus.innerHTML = `${upgrade.name}: ${upgrade.count} hired`;
-      }
-      
-      else {
-        upgradeButtons[idx].innerHTML = `Buy ${upgrade.name} (✨ ${upgrade.cost}) ~ ${upgrade.description}`;
+      } else {
+        upgradeButtons[idx].innerHTML =
+          `Buy ${upgrade.name} (✨ ${upgrade.cost}) ~ ${upgrade.description}`;
         upgradeStatus.innerHTML = `${upgrade.name}: ${upgrade.count} purchased`;
       }
 
