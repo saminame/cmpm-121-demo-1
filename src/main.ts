@@ -1,4 +1,5 @@
 import "./style.css";
+import imageSource from "./images/button.png"; // Found this from Picsart
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
@@ -13,9 +14,13 @@ let counter: number = 0;
 let growthRate: number = 0;
 
 // Step 1: A button you can click
-const button = document.createElement("button");
-button.innerHTML = "🧪";
-button.style.fontSize = "30px";
+// D1.d Inspiration - https://github.com/scso-ucsc/Incremental-Game-Development
+const button = document.createElement("img");
+button.src = imageSource;
+button.id = "potion";
+button.style.cursor = "pointer";
+button.style.width = "150px";
+button.style.height = "150px";
 button.style.padding = "20px";
 
 app.append(button);
