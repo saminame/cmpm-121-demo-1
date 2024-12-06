@@ -25,7 +25,19 @@ const counterDisplay = document.createElement("div");
 counterDisplay.innerHTML = `${Math.floor(counter)} potions`;
 app.append(counterDisplay);
 
-// Step 6: Multiple upgrades
+// Step 9: Data-driven design
+interface Item {
+  name: string;
+  cost: number;
+  rate: number;
+}
+
+const availableItems: Item[] = [
+  { name: "Apprentice", cost: 10, rate: 0.1 },
+  { name: "Cauldron", cost: 100, rate: 2.0 },
+  { name: "Alchemy Lab", cost: 1000, rate: 50 },
+];
+
 interface Upgrade {
   name: string;
   cost: number;
@@ -33,11 +45,10 @@ interface Upgrade {
   count: number;
 }
 
-const upgrades: Upgrade[] = [
-  { name: "Apprentice", cost: 10, rate: 0.1, count: 0 },
-  { name: "Cauldron", cost: 100, rate: 2.0, count: 0 },
-  { name: "Alchemy Lab", cost: 1000, rate: 50, count: 0 },
-];
+const upgrades: Upgrade[] = availableItems.map(item => ({
+  ...item,
+  count: 0,
+}));
 
 const upgradeButtons: HTMLButtonElement[] = [];
 const upgradeStatusDisplays: HTMLDivElement[] = [];
@@ -45,10 +56,9 @@ const upgradeStatusDisplays: HTMLDivElement[] = [];
 upgrades.forEach((upgrade, idx) => {
   const upgradeButton = document.createElement("button");
   if (upgrade.name == "Apprentice") {
-  upgradeButton.innerHTML = `Hire ${upgrade.name} (✨ ${upgrade.cost})`;
+    upgradeButton.innerHTML = `Hire ${upgrade.name} (✨ ${upgrade.cost})`;
   } else {
     upgradeButton.innerHTML = `Buy ${upgrade.name} (✨ ${upgrade.cost})`;
-
   }
   upgradeButton.disabled = true;
   upgradeButton.style.marginTop = "20px";
@@ -57,7 +67,7 @@ upgrades.forEach((upgrade, idx) => {
 
   const upgradeStatus = document.createElement("div");
   if (upgrade.name == "Apprentice") {
-  upgradeStatus.innerHTML = `${upgrade.name}: ${upgrade.count} hired`;
+    upgradeStatus.innerHTML = `${upgrade.name}: ${upgrade.count} hired`;
   } else {
     upgradeStatus.innerHTML = `${upgrade.name}: ${upgrade.count} purchased`;
   }
@@ -71,7 +81,7 @@ upgrades.forEach((upgrade, idx) => {
       counter -= upgrade.cost;
       upgrade.count++;
       growthRate += upgrade.rate;
-      upgrade.cost = parseFloat((upgrades[idx].cost * Math.pow(1.15, upgrade.count)).toFixed(2));
+      upgrade.cost = parseFloat((availableItems[idx].cost * Math.pow(1.15, upgrade.count)).toFixed(2));
       if (upgrade.name == "Apprentice") {
         upgradeButtons[idx].innerHTML = `Hire ${upgrade.name} (✨ ${upgrade.cost})`;
         upgradeStatus.innerHTML = `${upgrade.name}: ${upgrade.count} hired`;
