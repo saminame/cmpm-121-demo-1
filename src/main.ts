@@ -2,7 +2,7 @@ import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
-const gameName = "Potion Brewing Mastery";
+const gameName = "Potion Brewing";
 document.title = gameName;
 
 const header = document.createElement("h1");
@@ -14,7 +14,7 @@ let growthRate: number = 0;
 
 // Step 1: A button you can click
 const button = document.createElement("button");
-button.innerHTML = "🧪 Brew Potion";
+button.innerHTML = "🧪";
 button.style.fontSize = "30px";
 button.style.padding = "20px";
 
@@ -30,12 +30,15 @@ interface Item {
   name: string;
   cost: number;
   rate: number;
+  description: string;
 }
 
 const availableItems: Item[] = [
-  { name: "Apprentice", cost: 10, rate: 0.1 },
-  { name: "Cauldron", cost: 100, rate: 2.0 },
-  { name: "Alchemy Lab", cost: 1000, rate: 50 },
+  { name: "Apprentice", cost: 10, rate: 0.1, description: "A young helper to brew potions with you." },
+  { name: "Cauldron", cost: 100, rate: 2.0, description: "A sturdy cauldron for brewing potions faster." },
+  { name: "Alchemy Lab", cost: 1000, rate: 50, description: "An advanced lab for mass potion production." },
+  { name: "Potion Master", cost: 5000, rate: 150, description: "A seasoned alchemist who greatly speeds up potion production." },
+  { name: "Magic Fountain", cost: 20000, rate: 500, description: "A mystical fountain that provides an endless flow of magical potions." },
 ];
 
 interface Upgrade {
@@ -43,11 +46,12 @@ interface Upgrade {
   cost: number;
   rate: number;
   count: number;
+  description: string;
 }
 
 const upgrades: Upgrade[] = availableItems.map(item => ({
   ...item,
-  count: 0,
+  count: 0
 }));
 
 const upgradeButtons: HTMLButtonElement[] = [];
@@ -55,20 +59,20 @@ const upgradeStatusDisplays: HTMLDivElement[] = [];
 
 upgrades.forEach((upgrade, idx) => {
   const upgradeButton = document.createElement("button");
-  if (upgrade.name == "Apprentice") {
-    upgradeButton.innerHTML = `Hire ${upgrade.name} (✨ ${upgrade.cost})`;
-  } else {
-    upgradeButton.innerHTML = `Buy ${upgrade.name} (✨ ${upgrade.cost})`;
-  }
+  upgradeButton.innerHTML = `${upgrade.name == "Apprentice" || upgrade.name == "Potion Master" ? "Hire" : "Buy"} ${upgrade.name} (✨ ${upgrade.cost}) ~ ${upgrade.description}`;
+  
   upgradeButton.disabled = true;
   upgradeButton.style.marginTop = "20px";
   app.append(upgradeButton);
   upgradeButtons.push(upgradeButton);
 
   const upgradeStatus = document.createElement("div");
-  if (upgrade.name == "Apprentice") {
+
+  if (upgrade.name == "Apprentice" || upgrade.name == "Potion Master") {
     upgradeStatus.innerHTML = `${upgrade.name}: ${upgrade.count} hired`;
-  } else {
+  }
+  
+  else {
     upgradeStatus.innerHTML = `${upgrade.name}: ${upgrade.count} purchased`;
   }
 
@@ -82,13 +86,17 @@ upgrades.forEach((upgrade, idx) => {
       upgrade.count++;
       growthRate += upgrade.rate;
       upgrade.cost = parseFloat((availableItems[idx].cost * Math.pow(1.15, upgrade.count)).toFixed(2));
-      if (upgrade.name == "Apprentice") {
-        upgradeButtons[idx].innerHTML = `Hire ${upgrade.name} (✨ ${upgrade.cost})`;
+      
+      if (upgrade.name == "Apprentice" || upgrade.name == "Potion Master") {
+        upgradeButtons[idx].innerHTML = `Hire ${upgrade.name} (✨ ${upgrade.cost}) ~ ${upgrade.description}`;
         upgradeStatus.innerHTML = `${upgrade.name}: ${upgrade.count} hired`;
-      } else {
-        upgradeButtons[idx].innerHTML = `Buy ${upgrade.name} (✨ ${upgrade.cost})`;
+      }
+      
+      else {
+        upgradeButtons[idx].innerHTML = `Buy ${upgrade.name} (✨ ${upgrade.cost}) ~ ${upgrade.description}`;
         upgradeStatus.innerHTML = `${upgrade.name}: ${upgrade.count} purchased`;
       }
+
       counterDisplay.innerHTML = `${Math.floor(counter)} 🧪`;
       updateGrowthRateDisplay();
       checkUpgrade();
