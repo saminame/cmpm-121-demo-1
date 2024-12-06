@@ -42,7 +42,7 @@ const upgrades: Upgrade[] = [
 const upgradeButtons: HTMLButtonElement[] = [];
 const upgradeStatusDisplays: HTMLDivElement[] = [];
 
-upgrades.forEach((upgrade) => {
+upgrades.forEach((upgrade, idx) => {
   const upgradeButton = document.createElement("button");
   upgradeButton.innerHTML = `Buy ${upgrade.name} (✨ ${upgrade.cost})`;
   upgradeButton.disabled = true;
@@ -55,11 +55,14 @@ upgrades.forEach((upgrade) => {
   app.append(upgradeStatus);
   upgradeStatusDisplays.push(upgradeStatus);
 
+  // Step 7: Price increases
   upgradeButton.addEventListener("click", () => {
     if (counter >= upgrade.cost) {
       counter -= upgrade.cost;
       upgrade.count++;
       growthRate += upgrade.rate;
+      upgrade.cost = parseFloat((upgrades[idx].cost * Math.pow(1.15, upgrade.count)).toFixed(2));
+      upgradeButtons[idx].innerHTML = `Buy ${upgrade.name} (✨ ${upgrade.cost})`;
       counterDisplay.innerHTML = `${Math.floor(counter)} 🥘`;
       upgradeStatus.innerHTML = `${upgrade.name}: ${upgrade.count} purchased`;
       updateGrowthRateDisplay();
