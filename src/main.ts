@@ -146,7 +146,7 @@ const updateGrowthRateDisplay = () => {
 };
 
 // Step 2:
-button.addEventListener("click", () => {
+brewPotionButton.addEventListener("click", () => {
   counter++;
   counterDisplay.innerHTML = `${Math.floor(counter)} 🧪`;
   checkUpgrade();
