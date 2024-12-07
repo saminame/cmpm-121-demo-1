@@ -15,15 +15,15 @@ let growthRate: number = 0;
 
 // Step 1: A button you can click
 // D1.d Inspiration - https://github.com/scso-ucsc/Incremental-Game-Development
-const button = document.createElement("img");
-button.src = imageSource;
-button.id = "potion";
-button.style.cursor = "pointer";
-button.style.width = "150px";
-button.style.height = "150px";
-button.style.padding = "20px";
+const brewPotionButton = document.createElement("img");
+brewPotionButton.src = imageSource;
+brewPotionButton.id = "potion";
+brewPotionButton.style.cursor = "pointer";
+brewPotionButton.style.width = "150px";
+brewPotionButton.style.height = "150px";
+brewPotionButton.style.padding = "20px";
 
-app.append(button);
+app.append(brewPotionButton);
 
 // Step 2: Clicking increases a counter
 const counterDisplay = document.createElement("div");
@@ -174,7 +174,7 @@ const animate = (timestamp: number) => {
 requestAnimationFrame(animate);
 
 const checkUpgrade = () => {
-  upgradeButtons.forEach((button, idx) => {
-    button.disabled = counter < upgrades[idx].cost;
+  upgradeButtons.forEach((brewPotionButton, idx) => {
+    brewPotionButton.disabled = counter < upgrades[idx].cost;
   });
 };
