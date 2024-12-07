@@ -30,6 +30,10 @@ const counterDisplay = document.createElement("div");
 counterDisplay.innerHTML = `${Math.floor(counter)} potions`;
 app.append(counterDisplay);
 
+const updateCounterDisplay = () => {
+  counterDisplay.innerHTML = `${Math.floor(counter)} 🧪`;
+};
+
 // Step 9: Data-driven design
 interface Item {
   name: string;
@@ -129,7 +133,7 @@ upgrades.forEach((upgrade, idx) => {
         upgradeStatus.innerHTML = `${upgrade.name}: ${upgrade.count} purchased`;
       }
 
-      counterDisplay.innerHTML = `${Math.floor(counter)} 🧪`;
+      updateCounterDisplay();
       updateGrowthRateDisplay();
       checkUpgrade();
     }
@@ -148,7 +152,7 @@ const updateGrowthRateDisplay = () => {
 // Step 2:
 brewPotionButton.addEventListener("click", () => {
   counter++;
-  counterDisplay.innerHTML = `${Math.floor(counter)} 🧪`;
+  updateCounterDisplay();
   checkUpgrade();
 });
 
@@ -165,7 +169,7 @@ const animate = (timestamp: number) => {
 
   counter += growthRate * (elapsedTime / 1000);
 
-  counterDisplay.innerHTML = `${Math.floor(counter)} 🧪`;
+  updateCounterDisplay();
   checkUpgrade();
 
   requestAnimationFrame(animate);
