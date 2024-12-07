@@ -1,7 +1,11 @@
 import "./style.css";
 import imageSource from "./images/button.png"; // Found this from Picsart
 
-const app: HTMLDivElement = document.querySelector("#app")!;
+const app: HTMLDivElement | null = document.querySelector("#app");
+
+if (!app) {
+  throw new Error("The #app element does not exist in the DOM.");
+}
 
 const gameName = "Potion Brewing";
 document.title = gameName;
